@@ -2,12 +2,17 @@
 import sys
 import time
 
-from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QPushButton
+from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QPushButton, QAbstractItemView, QDialog
 from functools import partial
 
 
-import fist
+import second
+import Warning
 from PyQt5.QtCore import QTimer, QThread, pyqtSignal
+
+from PyQt5.QtGui import QBrush, QColor
+
+from bokeh.models import TableWidget
 
 
 def click_success():
@@ -15,7 +20,7 @@ def click_success():
 def convert(ui):
     partial
 def times(data):
-    ui.label.setText('{} s'.format(time.time()))
+    ui.label_8.setText('{} s'.format(time.time()))
 
     # def add(self):
     # btncont = ui.layout.count()
@@ -45,19 +50,43 @@ class Threads(QThread):
             # times()
             # print(a)
             a=a+1
+
+
+
             self.sleep(1)
+def set_UI(ui):
+    ui.tableWidget.setColumnCount(10)
+    ui.tableWidget.setRowCount(8)
+    ui.tableWidget.setColumnWidth(1,100)
+    ui.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
+    ui.tableWidget.setHorizontalHeaderLabels(['姓名      ','姓名','姓名','姓名','姓名','姓名','姓名','姓名','姓名','性别','体重（kg）'])
+    ui.tableWidget.resizeColumnsToContents()  #自适应列宽
+class childWindow(QDialog):
+  def __init__(self):
+    QDialog.__init__(self)
+    self.child=Warning.Ui_Dialog()
+    self.child.setupUi(self)
+
+
 if __name__ == '__main__':
 
     app = QApplication(sys.argv)
     MainWindow = QMainWindow()
-    ui = fist.Ui_MainWindow()
+
+
+    ui = second.Ui_MainWindow()
     ui.setupUi(MainWindow)
+    set_UI(ui)
+
+
+    # child = childWindow()
+    # 通过toolButton将两个窗体关联
+    # btn = ui.pushButton
+    # btn.clicked.connect(child.show)
+
     MainWindow.show()
-    # ui.pushButton.clicked.connect(click_success)
     ui.pushButton.clicked.connect(partial(convert, ui))
-    # timer = QTimer()  # 初始化定时器
-    # timer.timeout.connect(times)
-    # timer.start(2 * 1000)
+
     threadss = Threads()
     threadss.update_date.connect(times)  # 链接信号
 

@@ -14,6 +14,10 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem
 
 from PyQt5.QtCore import QTimer
 
+from PyQt5.QtGui import QBrush, QColor, QPalette
+
+from bokeh.models import TableWidget
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -47,11 +51,10 @@ class Ui_MainWindow(object):
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setColumnCount(4)
         self.tableWidget.setRowCount(4)
-        self.tableWidget.verticalHeader().setVisible(False)#隐藏垂直表头
-        self.tableWidget.horizontalHeader().setVisible(False)#隐藏水平表头
-
-
-
+        # self.tableWidget.verticalHeader().setVisible(False)#隐藏垂直表头
+        # self.tableWidget.horizontalHeader().setVisible(False)#隐藏水平表头
+        # self.tableWidget.item(1,1).setBackground(QBrush(QColor(255,0,0)))
+        self.tableWidget.resizeColumnsToContents()
 
         self.listView = QtWidgets.QListView(self.centralwidget)
         self.listView.setGeometry(QtCore.QRect(430, 40, 256, 192))

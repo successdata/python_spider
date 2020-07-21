@@ -14,6 +14,7 @@ from PyQt5.QtCore import QTimer, QThread, pyqtSignal
 from PyQt5.QtGui import QBrush, QColor
 
 from bokeh.models import TableWidget
+from qtpy import QtCore
 
 
 def click_success():
@@ -36,8 +37,10 @@ def times(data):
         for column in range(4):
             # item = QTableWidgetItem(str(data))
             ui.tableWidget.setItem(row, column, QTableWidgetItem(str(data)))  # 设置j
-def show_dialog(str):
+def show_dialog(data):
     child.show()
+    _translate = QtCore.QCoreApplication.translate
+    child.child.label.setText(_translate("Dialog", str(data)))
 
 class Threads(QThread):
     update_date = pyqtSignal(str) # pyqt5 支持python3的str，没有Qstring
@@ -77,7 +80,7 @@ if __name__ == '__main__':
     ui = second.Ui_MainWindow()
     ui.setupUi(MainWindow)
     set_UI(ui)
-    child = childWindow()
+    child: childWindow = childWindow()
     #通过toolButton将两个窗体关联
     btn = ui.pushButton
     btn.clicked.connect(child.show)

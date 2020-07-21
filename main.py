@@ -7,6 +7,7 @@ from functools import partial
 
 
 import second
+import third
 import Warning
 from PyQt5.QtCore import QTimer, QThread, pyqtSignal
 
@@ -35,7 +36,6 @@ def times(data):
         for column in range(4):
             # item = QTableWidgetItem(str(data))
             ui.tableWidget.setItem(row, column, QTableWidgetItem(str(data)))  # 设置j
-
 class Threads(QThread):
     update_date = pyqtSignal(str) # pyqt5 支持python3的str，没有Qstring
     def  __init__(self):
@@ -72,21 +72,22 @@ if __name__ == '__main__':
 
     app = QApplication(sys.argv)
     MainWindow = QMainWindow()
-
-
     ui = second.Ui_MainWindow()
     ui.setupUi(MainWindow)
     set_UI(ui)
 
 
-    # child = childWindow()
-    # 通过toolButton将两个窗体关联
-    # btn = ui.pushButton
-    # btn.clicked.connect(child.show)
+    child = childWindow()
+    #通过toolButton将两个窗体关联
+    btn = ui.pushButton
+    btn.clicked.connect(child.show)
 
+
+    # childWindow=third.Ui_Dialog
+    # dialog=QDialog
+    # childWindow.setupUi(dialog)
+    # ui.pushButton.clicked.connect(dialog.show())
     MainWindow.show()
-    ui.pushButton.clicked.connect(partial(convert, ui))
-
     threadss = Threads()
     threadss.update_date.connect(times)  # 链接信号
 

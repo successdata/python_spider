@@ -5,7 +5,7 @@ from PyQt5.QtCore import *
 import sys
 import time
 
-
+print (time.strftime("%Y-%m-%d %H:%M:%S"))
 class MyTable(QTableWidget):
     def __init__(self, parent=None):
         super(MyTable, self).__init__(parent)

@@ -21,7 +21,7 @@ def click_success():
 def convert(ui):
     partial
 def times(data):
-    ui.label_8.setText('{} s'.format(time.time()))
+    ui.label_8.setText('{} s'.format(time.strftime("%Y-%m-%d %H:%M:%S")))
 
     # def add(self):
     # btncont = ui.layout.count()
@@ -36,11 +36,14 @@ def times(data):
         for column in range(4):
             # item = QTableWidgetItem(str(data))
             ui.tableWidget.setItem(row, column, QTableWidgetItem(str(data)))  # 设置j
+def show_dialog(str):
+    child.show()
+
 class Threads(QThread):
     update_date = pyqtSignal(str) # pyqt5 支持python3的str，没有Qstring
+    warning_dialog=pyqtSignal(str)
     def  __init__(self):
         super(Threads,self).__init__()
-
     def run(self):
         #线程相关的代码
         a = 1
@@ -50,9 +53,8 @@ class Threads(QThread):
             # times()
             # print(a)
             a=a+1
-
-
-
+            if a>=10:
+                self.warning_dialog.emit(str(a))
             self.sleep(1)
 def set_UI(ui):
     ui.tableWidget.setColumnCount(10)
@@ -75,23 +77,15 @@ if __name__ == '__main__':
     ui = second.Ui_MainWindow()
     ui.setupUi(MainWindow)
     set_UI(ui)
-
-
     child = childWindow()
     #通过toolButton将两个窗体关联
     btn = ui.pushButton
     btn.clicked.connect(child.show)
 
-
-    # childWindow=third.Ui_Dialog
-    # dialog=QDialog
-    # childWindow.setupUi(dialog)
-    # ui.pushButton.clicked.connect(dialog.show())
     MainWindow.show()
     threadss = Threads()
-    threadss.update_date.connect(times)  # 链接信号
+    threadss.update_date.connect(times)
+    threadss.warning_dialog.connect(show_dialog)# 链接信号
 
     threadss.start()
-
-
     sys.exit(app.exec_())

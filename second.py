@@ -34,6 +34,7 @@ class Ui_MainWindow(object):
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
         self.tableWidget.setGeometry(QtCore.QRect(10, 40, 1211, 391))
         self.tableWidget.setObjectName("tableWidget")
+
         self.tableWidget.setColumnCount(0)
         self.tableWidget.setRowCount(0)
         self.label_2 = QtWidgets.QLabel(self.centralwidget)

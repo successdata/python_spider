@@ -15,7 +15,7 @@ from PyQt5.QtCore import QTimer, QThread, pyqtSignal, Qt
 from PyQt5.QtGui import QBrush, QColor
 
 from bokeh.models import TableWidget
-from qtpy import QtCore
+from qtpy import QtCore, QtGui
 
 
 def click_success():
@@ -42,6 +42,7 @@ def times(data):
         for column in range(4):
             # item = QTableWidgetItem(str(data))
             ui.tableWidget.setItem(row, column, QTableWidgetItem(str(data)))  # 设置j
+            ui.tableWidget.item(1,1).setForeground(QBrush(QColor(255,0,0)))
 def show_dialog(data):
     child.show()
     _translate = QtCore.QCoreApplication.translate
@@ -49,7 +50,7 @@ def show_dialog(data):
 
 class Threads(QThread):
     update_date = pyqtSignal(str) # pyqt5 支持python3的str，没有Qstring
-    warning_dialog=pyqtSignal(str)
+    warning_dialog=pyqtSignal(object)
     task_warning_dialog=pyqtSignal(str)
     def  __init__(self):
         super(Threads,self).__init__()
@@ -75,6 +76,8 @@ def set_UI(ui):
     ui.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
     ui.tableWidget.setHorizontalHeaderLabels(['姓名      ','姓名','姓名','姓名','姓名','姓名','姓名','姓名','姓名','性别','体重（kg）'])
     ui.tableWidget.resizeColumnsToContents()  #自适应列宽
+
+
 class childWindow(QDialog):
   def __init__(self):
     QDialog.__init__(self)
